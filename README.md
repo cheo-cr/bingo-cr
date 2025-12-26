@@ -1,4 +1,4 @@
-# 🎰 Bingo Tico - Cantador Familiar
+# 🙋 Bingo Tico - Cantador Familiar
 
 Aplicación web progresiva (PWA) para cantar bingo en reuniones familiares con cantos tradicionales costarricenses.
 
@@ -6,13 +6,20 @@ Aplicación web progresiva (PWA) para cantar bingo en reuniones familiares con c
 
 **URL:** https://cheito.xyz/bingo-cr/
 
-### 🔄 Para Actualizar el Sitio
+### 🔄 Para Actualizar el Sitio (IMPORTANTE)
 
-1. Subir todos los archivos vía FTP a `/bingo-cr/`
-2. **Limpiar caché visitando:** https://cheito.xyz/bingo-cr/clear-cache.html
-3. Verificar la nueva versión
+1. Subir TODOS los archivos vía FTP a `/bingo-cr/`
+2. **OPCIÓN A - Limpieza Normal:** https://cheito.xyz/bingo-cr/clear-cache.html
+3. **OPCIÓN B - Limpieza FORZADA (si A no funciona):** https://cheito.xyz/bingo-cr/force-update.html
 
-**Si los usuarios ven versión antigua:** Envíales el link `https://cheito.xyz/bingo-cr/clear-cache.html`
+**Si ves versiones antiguas después de actualizar:**
+- Visita **force-update.html** y haz clic en "FORZAR ACTUALIZACIÓN"
+- En Chrome/Edge: F12 → Application → Clear storage → "Clear site data"
+- En Firefox: F12 → Storage → Clear All
+- En Safari: Develop → Empty Caches
+
+**Para usuarios finales con problemas de caché:**
+Envíales: `https://cheito.xyz/bingo-cr/force-update.html`
 
 ## ✨ Características
 

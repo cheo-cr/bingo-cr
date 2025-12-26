@@ -51,7 +51,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>🎰 Bingo Tico</h1>
+        <h1>🙋 Bingo Tico</h1>
         <div class="loading">Limpiando caché...</div>
         <div class="spinner"></div>
         <p id="status">Eliminando versiones antiguas</p>
@@ -83,15 +83,18 @@
                 // 3. Mostrar éxito
                 status.innerHTML = '<div class="success">✓ Caché limpiada correctamente</div><p>Redirigiendo...</p>';
                 
-                // 4. Esperar un momento y redirigir
+                // Limpiar también localStorage
+                try { localStorage.clear(); sessionStorage.clear(); } catch(e) {}
+                
+                // 4. Esperar un momento y redirigir CON TIMESTAMP
                 setTimeout(() => {
-                    window.location.href = 'index.html';
+                    window.location.href = 'index.html?nocache=' + Date.now() + '&v=3.1.5';
                 }, 2000);
                 
             } catch (error) {
                 status.innerHTML = '<div style="color: red;">Error: ' + error.message + '</div><p>Redirigiendo de todas formas...</p>';
                 setTimeout(() => {
-                    window.location.href = 'index.html';
+                    window.location.href = 'index.html?nocache=' + Date.now() + '&v=3.1.5';
                 }, 2000);
             }
         }

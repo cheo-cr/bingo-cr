@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="app-version" content="3.1.5">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
@@ -13,12 +14,12 @@
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
     <link rel="apple-touch-icon" href="icon-192.png">
-    <link rel="stylesheet" href="styles.css?v=3.1.0">
+    <link rel="stylesheet" href="styles.css?v=3.1.5">
 </head>
 <body>
     <div class="safe-area">
         <header>
-            <h1>🎰 Bingo Tico</h1>
+            <h1>🙋 Bingo Tico</h1>
             <p class="subtitle">Cantador Familiar</p>
         </header>
 
@@ -128,20 +129,53 @@
         </div>
     </div>
 
-    <script src="cantos.js?v=3.1.0"></script>
-    <script src="app.js?v=3.1.0"></script>
+    <script src="cantos.js?v=3.1.5"></script>
+    <script src="app.js?v=3.1.5"></script>
     <script>
-        // Registrar Service Worker
+        // Registrar Service Worker con detección de versión
         if ('serviceWorker' in navigator) {
+            const APP_VERSION = document.querySelector('meta[name="app-version"]')?.content || '3.1.5';
+            
+            // Limpiar service workers viejos al inicio
+            navigator.serviceWorker.getRegistrations().then(registrations => {
+                registrations.forEach(reg => {
+                    if (reg.active && reg.active.scriptURL.includes('service-worker')) {
+                        // Verificar si es una versión antigua
+                        reg.unregister().then(() => {
+                            console.log('Service Worker antiguo desregistrado');
+                        });
+                    }
+                });
+            });
+            
+            // Escuchar mensajes del service worker
+            navigator.serviceWorker.addEventListener('message', event => {
+                if (event.data.type === 'VERSION_UPDATE') {
+                    console.log('Nueva versión detectada:', event.data.version);
+                    // Solo recargar si la versión es diferente
+                    if (event.data.version !== APP_VERSION) {
+                        console.log('Actualizando a nueva versión...');
+                        setTimeout(() => window.location.reload(), 1000);
+                    }
+                }
+            });
+            
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('service-worker.js')
+                // Forzar actualización con timestamp
+                const swUrl = 'service-worker.js?t=' + Math.floor(Date.now() / 60000);
+                navigator.serviceWorker.register(swUrl)
                     .then(reg => {
-                        console.log('Service Worker registrado');
+                        console.log('Service Worker registrado, versión:', APP_VERSION);
                         
                         // Verificar actualizaciones cada 5 minutos
                         setInterval(() => {
                             reg.update();
                         }, 300000);
+                        
+                        // Verificar actualizaciones al focus
+                        window.addEventListener('focus', () => {
+                            reg.update();
+                        });
                     })
                     .catch(err => console.log('Error al registrar SW:', err));
             });

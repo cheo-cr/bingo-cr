@@ -1,16 +1,21 @@
-# Prevenir caché del navegador para archivos principales
+# Prevenir caché del navegador para archivos principales - AGRESIVO
 <FilesMatch "\.(html|htm|js|css)$">
     FileETag None
     Header unset ETag
-    Header set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
+    Header unset Last-Modified
+    Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0, post-check=0, pre-check=0"
     Header set Pragma "no-cache"
-    Header set Expires "Wed, 11 Jan 1984 05:00:00 GMT"
+    Header set Expires "0"
 </FilesMatch>
 
-# Service Worker debe poder actualizarse
+# Service Worker debe poder actualizarse - SUPER AGRESIVO
 <FilesMatch "service-worker\.js$">
-    Header set Cache-Control "max-age=0, no-cache, no-store, must-revalidate"
+    Header set Cache-Control "no-store, no-cache, must-revalidate, max-age=0"
+    Header set Pragma "no-cache"
+    Header set Expires "0"
     Header set Service-Worker-Allowed "/"
+    Header unset ETag
+    Header unset Last-Modified
 </FilesMatch>
 
 # Habilitar CORS si es necesario

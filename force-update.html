@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <title>Actualización Forzada - Bingo Tico</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #c41e3a;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            background: white;
+            color: #333;
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 500px;
+        }
+        h1 { color: #c41e3a; margin-bottom: 20px; }
+        .step { 
+            padding: 15px; 
+            margin: 10px 0;
+            background: #f0f0f0; 
+            border-radius: 10px;
+            font-weight: bold;
+        }
+        .step.active { background: #fff3cd; }
+        .step.done { background: #d4edda; color: #155724; }
+        .step.error { background: #f8d7da; color: #721c24; }
+        button {
+            background: #c41e3a;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover { background: #a01628; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 ACTUALIZACIÓN FORZADA</h1>
+        <p>Esta herramienta eliminará TODO el cache y forzará la versión más reciente.</p>
+        
+        <div id="step1" class="step">1. Desregistrar Service Workers</div>
+        <div id="step2" class="step">2. Eliminar Cachés</div>
+        <div id="step3" class="step">3. Limpiar Almacenamiento</div>
+        <div id="step4" class="step">4. Recargar Aplicación</div>
+        
+        <button id="forceBtn" onclick="forceUpdate()">FORZAR ACTUALIZACIÓN AHORA</button>
+        <p id="status" style="margin-top: 20px;"></p>
+    </div>
+
+    <script>
+        async function forceUpdate() {
+            const btn = document.getElementById('forceBtn');
+            const status = document.getElementById('status');
+            btn.disabled = true;
+            btn.textContent = 'PROCESANDO...';
+            
+            try {
+                // Paso 1: Service Workers
+                document.getElementById('step1').className = 'step active';
+                const registrations = await navigator.serviceWorker.getRegistrations();
+                for (let reg of registrations) {
+                    await reg.unregister();
+                }
+                document.getElementById('step1').className = 'step done';
+                await sleep(500);
+                
+                // Paso 2: Cachés
+                document.getElementById('step2').className = 'step active';
+                const cacheNames = await caches.keys();
+                await Promise.all(cacheNames.map(name => caches.delete(name)));
+                document.getElementById('step2').className = 'step done';
+                await sleep(500);
+                
+                // Paso 3: Storage
+                document.getElementById('step3').className = 'step active';
+                localStorage.clear();
+                sessionStorage.clear();
+                document.getElementById('step3').className = 'step done';
+                await sleep(500);
+                
+                // Paso 4: Reload
+                document.getElementById('step4').className = 'step active';
+                status.textContent = '✓ Todo limpiado. Recargando en 2 segundos...';
+                
+                await sleep(2000);
+                
+                // Recargar con timestamp único
+                window.location.href = 'index.html?force=' + Date.now() + '&v=3.1.5';
+                
+            } catch (error) {
+                status.textContent = 'Error: ' + error.message;
+                status.style.color = 'red';
+                btn.disabled = false;
+                btn.textContent = 'REINTENTAR';
+            }
+        }
+        
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+    </script>
+</body>
+</html>
