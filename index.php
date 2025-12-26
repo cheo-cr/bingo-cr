@@ -141,6 +141,27 @@ $timestamp = time();
     <script src="cantos.js?v=<?php echo $timestamp; ?>"></script>
     <script src="app.js?v=<?php echo $timestamp; ?>"></script>
     <script>
+        // PWA Install Prompt - Inmediato
+        let deferredPrompt;
+        
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            
+            // Mostrar prompt inmediatamente
+            setTimeout(() => {
+                if (deferredPrompt) {
+                    deferredPrompt.prompt();
+                    deferredPrompt.userChoice.then((choiceResult) => {
+                        if (choiceResult.outcome === 'accepted') {
+                            console.log('PWA instalada');
+                        }
+                        deferredPrompt = null;
+                    });
+                }
+            }, 1000); // 1 segundo después de cargar
+        });
+        
         // NO SERVICE WORKER - Solo timestamps frescos
         // Desregistrar cualquier service worker existente
         if ('serviceWorker' in navigator) {
