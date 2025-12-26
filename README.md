@@ -6,19 +6,21 @@ Aplicación web progresiva (PWA) para cantar bingo en reuniones familiares con c
 
 **URL:** https://cheito.xyz/bingo-cr/
 
-### 🔄 Para Actualizar el Sitio (IMPORTANTE)
+### 🔄 Para Actualizar el Sitio (v3.1.6 - SIN SERVICE WORKER)
+
+**IMPORTANTE:** La app ahora usa `index.php` en lugar de `index.html` para evitar cache.
 
 1. Subir TODOS los archivos vía FTP a `/bingo-cr/`
-2. **OPCIÓN A - Limpieza Normal:** https://cheito.xyz/bingo-cr/clear-cache.html
-3. **OPCIÓN B - Limpieza FORZADA (si A no funciona):** https://cheito.xyz/bingo-cr/force-update.html
+2. **CRÍTICO:** Asegúrate que tu servidor soporte PHP
+3. Visita: `https://cheito.xyz/bingo-cr/force-update.html`
+4. La app redirigirá automáticamente a `index.php`
 
-**Si ves versiones antiguas después de actualizar:**
-- Visita **force-update.html** y haz clic en "FORZAR ACTUALIZACIÓN"
-- En Chrome/Edge: F12 → Application → Clear storage → "Clear site data"
-- En Firefox: F12 → Storage → Clear All
-- En Safari: Develop → Empty Caches
+**Si ves versiones antiguas:**
+- El servidor DEBE soportar PHP para que funcione correctamente
+- Si no tienes PHP, usa `index.html` pero los usuarios necesitarán hacer Ctrl+Shift+R
+- `index.php` genera timestamps únicos en cada carga = NO MÁS CACHE
 
-**Para usuarios finales con problemas de caché:**
+**Para usuarios finales con problemas:**
 Envíales: `https://cheito.xyz/bingo-cr/force-update.html`
 
 ## ✨ Características

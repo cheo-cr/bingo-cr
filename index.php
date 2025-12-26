@@ -1,8 +1,17 @@
+<?php
+// Prevenir cache del HTML
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Pragma: no-cache");
+header("Expires: 0");
+
+$version = '3.1.6';
+$timestamp = time();
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="app-version" content="3.1.6">
+    <meta name="app-version" content="<?php echo $version; ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
@@ -14,12 +23,12 @@
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
     <link rel="apple-touch-icon" href="icon-192.png">
-    <link rel="stylesheet" href="styles.css?v=3.1.6">
+    <link rel="stylesheet" href="styles.css?v=<?php echo $timestamp; ?>">
 </head>
 <body>
     <div class="safe-area">
         <header>
-            <h1>🙋 Bingo Tico</h1>
+            <h1>🎰 Bingo Tico</h1>
             <p class="subtitle">Cantador Familiar</p>
         </header>
 
@@ -129,21 +138,18 @@
         </div>
     </div>
 
-    <script src="cantos.js?v=3.1.6"></script>
-    <script src="app.js?v=3.1.6"></script>
+    <script src="cantos.js?v=<?php echo $timestamp; ?>"></script>
+    <script src="app.js?v=<?php echo $timestamp; ?>"></script>
     <script>
-        // NO SERVICE WORKER - Causa problemas de cache
-        // Auto-reload cada 5 minutos para asegurar version fresca
-        setTimeout(() => {
-            window.location.href = window.location.pathname + '?t=' + Date.now();
-        }, 300000);
-        
+        // NO SERVICE WORKER - Solo timestamps frescos
         // Desregistrar cualquier service worker existente
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.getRegistrations().then(registrations => {
                 registrations.forEach(reg => reg.unregister());
             });
         }
+        
+        console.log('Bingo Tico v<?php echo $version; ?> - Build: <?php echo $timestamp; ?>');
     </script>
 </body>
 </html>

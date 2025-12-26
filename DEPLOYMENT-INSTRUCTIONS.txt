@@ -1,0 +1,100 @@
+===========================================
+BINGO TICO v3.1.6 - SOLUCIÓN DEFINITIVA ANTI-CACHE
+===========================================
+
+🚨 CAMBIO IMPORTANTE: Ahora usa PHP en lugar de HTML
+
+PROBLEMA RESUELTO:
+- ❌ Service Worker causaba problemas de cache
+- ❌ HTML estático se cacheaba en navegadores
+- ✅ SOLUCIÓN: PHP genera timestamps únicos en cada carga
+
+===========================================
+INSTRUCCIONES DE DEPLOYMENT
+===========================================
+
+1. VERIFICAR QUE TU SERVIDOR TENGA PHP:
+   - La mayoría de hostings tienen PHP habilitado
+   - Si no tienes PHP, contacta a tu proveedor
+
+2. SUBIR ESTOS ARCHIVOS:
+   ✓ index.php (NUEVO - archivo principal)
+   ✓ index.html (backup, pero index.php tiene prioridad)
+   ✓ .htaccess (actualizado con redirect)
+   ✓ styles.css
+   ✓ app.js
+   ✓ cantos.js
+   ✓ force-update.html
+   ✓ clear-cache.html
+   ✓ manifest.json
+   ✓ icon-192.png
+   ✓ icon-512.png
+
+3. DESPUÉS DE SUBIR:
+   Visita: https://cheito.xyz/bingo-cr/force-update.html
+   - Haz clic en "FORZAR ACTUALIZACIÓN AHORA"
+   - Se limpiará TODO y redirigirá a index.php
+
+4. VERIFICAR:
+   - Abre: https://cheito.xyz/bingo-cr/
+   - Debería cargar index.php automáticamente
+   - Presiona F12 → Console
+   - Deberías ver: "Bingo Tico v3.1.6 - Build: [timestamp]"
+
+===========================================
+CÓMO FUNCIONA LA NUEVA VERSIÓN
+===========================================
+
+1. .htaccess redirige index.html → index.php
+2. index.php genera timestamps únicos en CADA carga:
+   - styles.css?v=[timestamp-unico]
+   - app.js?v=[timestamp-unico]
+   - cantos.js?v=[timestamp-unico]
+
+3. NO MÁS SERVICE WORKER:
+   - Los service workers causaban más problemas que soluciones
+   - Ahora solo timestamps frescos en cada carga
+
+4. Headers anti-cache agresivos en .htaccess:
+   - Cache-Control: no-store, no-cache
+   - Pragma: no-cache
+   - Expires: 0
+
+===========================================
+SOLUCIÓN DE PROBLEMAS
+===========================================
+
+Si los usuarios ven versión antigua:
+
+OPCIÓN 1 (Mejor):
+https://cheito.xyz/bingo-cr/force-update.html
+
+OPCIÓN 2 (Manual):
+1. F12 → Application → Clear storage
+2. Ctrl+Shift+R (hard reload)
+
+OPCIÓN 3 (Si no hay PHP):
+- Usa index.html
+- Los usuarios necesitarán Ctrl+Shift+R cada vez
+
+===========================================
+URLS IMPORTANTES
+===========================================
+
+Producción: https://cheito.xyz/bingo-cr/
+Forzar actualización: https://cheito.xyz/bingo-cr/force-update.html
+Limpiar cache: https://cheito.xyz/bingo-cr/clear-cache.html
+GitHub: https://github.com/cheo-cr/bingo-cr
+
+===========================================
+CAMBIOS EN ESTA VERSIÓN (3.1.6)
+===========================================
+
+✅ Eliminado service worker completamente
+✅ Implementado index.php con timestamps dinámicos
+✅ .htaccess actualizado con redirect automático
+✅ Botón "Sacar Bola" más grande (1.5rem)
+✅ Texto de cantada más legible (1.4rem/1.8rem)
+✅ NO MÁS PROBLEMAS DE CACHE
+
+===========================================

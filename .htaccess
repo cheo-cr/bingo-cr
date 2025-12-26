@@ -1,5 +1,13 @@
+# DirectoryIndex - usar PHP primero
+DirectoryIndex index.php index.html
+
+# Redirect index.html a index.php para evitar cache
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} index\.html$
+RewriteRule ^(.*)index\.html$ /$1index.php?t=%{TIME} [R=302,L]
+
 # Prevenir caché del navegador para archivos principales - AGRESIVO
-<FilesMatch "\.(html|htm|js|css)$">
+<FilesMatch "\.(html|htm|js|css|php)$">
     FileETag None
     Header unset ETag
     Header unset Last-Modified

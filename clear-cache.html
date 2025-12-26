@@ -88,13 +88,13 @@
                 
                 // 4. Esperar un momento y redirigir CON TIMESTAMP
                 setTimeout(() => {
-                    window.location.href = 'index.html?nocache=' + Date.now() + '&v=3.1.5';
+                    window.location.href = 'index.php?cleared=' + Date.now();
                 }, 2000);
                 
             } catch (error) {
                 status.innerHTML = '<div style="color: red;">Error: ' + error.message + '</div><p>Redirigiendo de todas formas...</p>';
                 setTimeout(() => {
-                    window.location.href = 'index.html?nocache=' + Date.now() + '&v=3.1.5';
+                    window.location.href = 'index.php?cleared=' + Date.now();
                 }, 2000);
             }
         }
