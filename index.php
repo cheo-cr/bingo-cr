@@ -4,7 +4,7 @@ header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
 header("Pragma: no-cache");
 header("Expires: 0");
 
-$version = '3.1.6';
+$version = '3.2.0';
 $timestamp = time();
 ?>
 <!DOCTYPE html>
@@ -141,6 +141,13 @@ $timestamp = time();
     <script src="cantos.js?v=<?php echo $timestamp; ?>"></script>
     <script src="app.js?v=<?php echo $timestamp; ?>"></script>
     <script>
+        // Registrar Service Worker MINIMO (solo para PWA install)
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js')
+                .then(reg => console.log('SW registrado para PWA'))
+                .catch(err => console.log('Error SW:', err));
+        }
+        
         // PWA Install Prompt - Inmediato
         let deferredPrompt;
         
@@ -153,22 +160,12 @@ $timestamp = time();
                 if (deferredPrompt) {
                     deferredPrompt.prompt();
                     deferredPrompt.userChoice.then((choiceResult) => {
-                        if (choiceResult.outcome === 'accepted') {
-                            console.log('PWA instalada');
-                        }
+                        console.log(choiceResult.outcome === 'accepted' ? 'PWA instalada' : 'PWA rechazada');
                         deferredPrompt = null;
                     });
                 }
-            }, 1000); // 1 segundo después de cargar
+            }, 1500);
         });
-        
-        // NO SERVICE WORKER - Solo timestamps frescos
-        // Desregistrar cualquier service worker existente
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.getRegistrations().then(registrations => {
-                registrations.forEach(reg => reg.unregister());
-            });
-        }
         
         console.log('Bingo Tico v<?php echo $version; ?> - Build: <?php echo $timestamp; ?>');
     </script>
