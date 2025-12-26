@@ -1,0 +1,23 @@
+<svg width="192" height="192" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#c41e3a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#a01628;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="shine" cx="50%" cy="30%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.4" />
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Fondo -->
+  <rect width="192" height="192" rx="40" fill="url(#bg)"/>
+  
+  <!-- Bola de bingo -->
+  <circle cx="96" cy="80" r="45" fill="#ffd700"/>
+  <ellipse cx="96" cy="70" rx="25" ry="18" fill="url(#shine)"/>
+  <text x="96" y="95" font-family="Arial, sans-serif" font-size="48" font-weight="bold" fill="white" text-anchor="middle">75</text>
+  
+  <!-- Texto BINGO -->
+  <text x="96" y="160" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="white" text-anchor="middle">BINGO</text>
+</svg>
